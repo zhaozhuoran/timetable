@@ -1,0 +1,13 @@
+{
+  "timetables": [
+    {
+      "file": "data/timetables/timetable-G2-S1.json",
+      "visible_weeks": 2,
+      "end": "2026-03-31",
+      "start": "2026-01-01",
+      "visible_days": 3,
+      "ignore_past_days": false
+    }
+  ],
+  "$version": 2
+}

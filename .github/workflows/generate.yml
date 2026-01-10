@@ -1,0 +1,38 @@
+name: Generate ICS
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'data/**'
+      - 'scripts/**'
+      - 'requirements.txt'
+      - '.github/workflows/generate.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    # Skip if commit message contains [SKIP]
+    if: "!contains(github.event.head_commit.message, '[SKIP]')"
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Generate ICS
+      run: python scripts/generate_ics.py
+
+    - name: Deploy to GH Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: _site

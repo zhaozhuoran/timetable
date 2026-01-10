@@ -1,0 +1,19 @@
+{
+  "$version": 1,
+  "Math": "Mathematics",
+  "English": "English Language",
+  "Physics": "Physics",
+  "Chemistry": "Chemistry",
+  "Biology": "Biology",
+  "Civics": "Civics",
+  "PE": "Physical Education",
+  "Advisory": "Advisory",
+  "Art": "Studio Art",
+  "Music": "Music",
+  "ComputerScience": "Computer Science",
+  "History": "History",
+  "GuestLecture": "Guest Lecture",
+  "Robotics": "Robotics Lab",
+  "StudyHall": "Study Hall",
+  "Homeroom": "Homeroom"
+}
