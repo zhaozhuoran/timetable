@@ -1,4 +1,6 @@
-# timetable
+# Timetable
+
+[![banner](img/banner-title.png)](img/banner-title.png)
 
 生成一个可自动更新的课程表 iCalendar (ICS) 订阅源，并通过 GitHub Pages 发布。
 

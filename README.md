@@ -1,5 +1,7 @@
 # Timetable
 
+[![banner](img/banner-title.png)](img/banner-title.png)
+
 Generate an auto-updating iCalendar (ICS) feed for class schedules and publish it via GitHub Pages.
 
 - English README (this file)
