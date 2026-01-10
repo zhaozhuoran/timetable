@@ -1,18 +1,18 @@
-# 配置说明（Configuration Guide）
+# 配置说明
 
-- 英文（主文档）：[CONFIG.md](CONFIG.md)
+- 英文 (主文档) ：[CONFIG.md](CONFIG.md)
 - 简体中文：当前文件
 
 ## 文件总览
 
 所有配置文件位于 `data/` 目录下：
 
-- `periods.json` – 课节时间定义
-- `subjects.json` – 课程 ID 到显示名称的映射
-- `timetable.json` – 主课表配置入口
-- `timetables/` – 具体课表文件目录
-- `holidays.json` – 节假日设置
-- `overrides.json` – 临时调课设置
+- `periods.json`：节次时间
+- `subjects.json`：课程 ID 到显示名称的映射
+- `timetable.json`：主课表配置
+- `holidays.json`：节假日配置
+- `overrides.json`：临时调课配置
+- `timetables/*.json`：具体课表文件
 
 ## periods.json
 
@@ -30,8 +30,8 @@
 
 ### 说明
 
-- 键为课节 ID（字符串形式）
-- `start` 和 `end` 为时间，格式 `HH:MM`（24 小时制）
+- key 为课节 ID (字符串形式)
+- `start` 和 `end` 为时间，格式 `HH:MM` (24 小时制)
 
 ## subjects.json
 
@@ -49,14 +49,14 @@
 
 ### 说明
 
-- 键：课表中引用的课程 ID
+- key：课表中引用的课程 ID
 - 值：在日历事件中展示的名称
 
 ## timetable.json
 
 主课表配置文件，支持两种版本。
 
-### 版本 2（推荐）
+### 版本 2 (推荐)
 
 支持配置多个课表文件，每个文件有独立的起止日期范围：
 
@@ -84,7 +84,7 @@
 }
 ```
 
-### 版本 1（兼容旧格式）
+### 版本 1 (兼容旧格式)
 
 直接定义一个课表数组：
 
@@ -109,29 +109,29 @@
 
 ### 字段详解
 
-- `$version`：版本号（1 或 2）
+- `$version`：版本号 (1 或 2)
 - `timetables`：版本 2 中的课表配置列表
   - `file`：课表文件路径
-  - `start`：生效开始日期（`YYYY-MM-DD`）
-  - `end`：生效结束日期（`YYYY-MM-DD`）
-  - `visible_weeks`：以“周”为窗口的可见范围（默认 2）
+  - `start`：生效开始日期 (`YYYY-MM-DD`)
+  - `end`：生效结束日期 (`YYYY-MM-DD`)
+  - `visible_weeks`：以“周”为窗口的可见范围 (默认 2)
     - 0：禁用按周控制，仅依赖 `visible_days`
     - 1：只显示当前周
     - 2：当前周 + 下一周，以此类推
-  - `visible_days`：以“天”为窗口的可见范围（默认 0）
+  - `visible_days`：以“天”为窗口的可见范围 (默认 0)
     - 0：禁用按天控制，仅依赖 `visible_weeks`
     - 1：只显示“今天”
     - N：显示今天及之后共 N 天
     - 注意：与 `visible_weeks` 采用 OR 逻辑，只要满足任一条件即可；若两者都为 0，则该课表配置会被跳过。
       例如：`visible_weeks=1` 且 `visible_days=1` 时，即使在周日也会显示整周；如果只希望在周日预览周一，可以设置 `visible_days=2` 且 `visible_weeks=0`。
-  - `ignore_past_days`：是否忽略今天之前的日期（默认 `false`）
+  - `ignore_past_days`：是否忽略今天之前的日期 (默认 `false`)，启用日历会更简洁 :)
     - `true`：跳过今天之前的整天事件
     - `false`：包含配置范围内的所有事件
 - `timetable`：版本 1 中的课表数组
 
 ## timetables/\*.json
 
-具体课表文件，描述一周内每个工作日、每节课对应的课程。
+具体课表文件
 
 ### 格式示例
 
@@ -150,14 +150,14 @@
 ### 字段说明
 
 - `weekday`：星期几，1=周一，2=周二，…，7=周日
-- `period`：课节 ID（字符串），必须在 `periods.json` 中存在
+- `period`：课节 ID (字符串) ，必须在 `periods.json` 中存在
 - `subject`：课程 ID，必须在 `subjects.json` 中存在
 
 ## holidays.json
 
-用于定义节假日；在这些日期内不会生成课程事件。
+定义节假日，在这些日期内不会生成课程事件。
 
-### 新格式（v1，推荐）
+### 新格式 (v1，推荐)
 
 支持日期范围和过滤条件：
 
@@ -186,7 +186,7 @@
 }
 ```
 
-### 旧格式（兼容）
+### 旧格式 (兼容)
 
 按日期映射到布尔值，其中 `false` 表示跳过：
 
@@ -201,10 +201,10 @@
 
 新格式中支持：
 
-- `date`：单个日期（`YYYY-MM-DD`）
-- `start` + `end`：日期范围（`YYYY-MM-DD`）
+- `date`：单个日期 (`YYYY-MM-DD`)
+- `start` + `end`：日期范围 (`YYYY-MM-DD`)
 - `filter`：可选过滤条件
-  - `weekday`：指定哪些星期几为节假日，数组形式（1–7）
+  - `weekday`：指定哪些星期几为节假日，数组形式 (1–7)
 - `comment`：可选备注信息
 
 ## overrides.json
@@ -226,7 +226,7 @@
 
 ### 字段说明
 
-- 键：日期（`YYYY-MM-DD`）
+- 键：日期 (`YYYY-MM-DD`)
 - 值：两种形式之一
   - `{ "use_weekday": <1-7> }`：整天按另一星期的课表重排
   - 若干 `{ "period", "subject" }` 组成的数组：仅对指定节次进行替换
@@ -235,27 +235,28 @@
 
 ### 备注
 
-- 某天一旦配置了 overrides，当天正常课表将被忽略
+- 某天一旦配置了 overrides，当天正常课表将被忽略！
 - 仅会添加 overrides 中明确定义的事件
 
 ## 小贴士
 
-1. 修改配置后，可先本地运行 `python scripts/generate_ics.py` 验证生成结果。
-2. 建议在大规模修改前先备份 `data/` 目录。
-3. 所有日期均使用 `YYYY-MM-DD` 格式。
-4. 所有时间均使用 `HH:MM`（24 小时制）。
-5. 确保所有 JSON 文件以 UTF-8 编码保存。
+1. 修改配置后，可先本地运行 `python scripts/generate_ics.py` 验证生成结果
+2. 建议在大规模修改前先备份 `data/` 目录，但是 Git 也会帮你记录历史版本 :)
+3. 所有日期均使用 `YYYY-MM-DD` 格式
+4. 所有时间均使用 `HH:MM` (24 小时制)
+5. 确保所有 JSON 文件以 UTF-8 编码保存，尤其是使用中文或者其他非 ASCII 字符时
 
 ## CI / 部署
 
-`.github/workflows/generate.yml` 将这些配置与自动发布流程串联起来：
+仓库中预配置了两个 GitHub Actions 工作流：
 
-- 当推送到 `main` 分支，且修改了 `data/**`、`scripts/**`、`requirements.txt` 或工作流文件本身时，会触发该工作流。
-- 工作流会安装依赖，执行 `python scripts/generate_ics.py`，并将生成的 ICS 写入 `_site/calendar.ics`。
-- `_site/` 目录会通过 `peaceiris/actions-gh-pages` 发布到 GitHub Pages（默认部署到 `gh-pages` 分支）。
+- `.github/workflows/generate.yml`：检测日程设置或代码变化并实施刷新
+- `.github/workflows/daily_update.yml`：每日自动刷新
 
-实践建议：
+你可以针对你的需要来修改这些工作流。
 
-- `static/` 目录中的文件（例如 `static/CNAME`）会在生成时被复制到 `_site/`，从而一并发布。
-- 若某次提交不希望触发工作流，可在提交说明中包含 `[SKIP]` 关键字。
-- 在确认 `_site/calendar.ics` 能按你的配置正确生成后，到仓库设置中启用 GitHub Pages，并选择工作流使用的分支（通常是 `gh-pages`）。
+备注：
+
+- 若提交说明中包含 `[SKIP]`，该次提交会跳过工作流执行。
+- 生成脚本会将 `static/` 中的文件（例如 `static/CNAME`）复制到 `_site/`，从而一并发布到 Pages，你可以在这里设置 CNAME 文件，避免发布后自定义域名失效的问题。
+- 首次成功运行后，请在仓库设置中启用 GitHub Pages，并选择 `gh-pages` 分支作为发布源。

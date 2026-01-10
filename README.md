@@ -1,6 +1,4 @@
-<!-- See <attachments> above for file contents. You may not need to search or read the file again. -->
-
-# Timetable ICS
+# Timetable
 
 Generate an auto-updating iCalendar (ICS) feed for class schedules and publish it via GitHub Pages.
 
@@ -9,46 +7,48 @@ Generate an auto-updating iCalendar (ICS) feed for class schedules and publish i
 
 ## Features
 
-- ICS generation with deterministic UIDs.
-- Visible window controls: `visible_weeks` and `visible_days` (OR logic).
-- Holiday filtering (range and single-day, with optional weekday filters).
-- Overrides: full-day reschedule (`use_weekday`) or per-period replacements.
-- Supports timetable v1/v2 and `$version` metadata.
-- GitHub Actions build + GitHub Pages publishing.
+- ICS generation with deterministic UIDs
+- Visible window controls: `visible_weeks` and `visible_days` (OR logic)
+- Holiday filtering: supports date ranges, single dates, and weekday filters
+- Overrides: full-day reschedule (`use_weekday`) or per-period replacements
+- GitHub Actions workflow and GitHub Pages deployment
 
-## Quick Start
+## Quick Start (GitHub Action + GitHub Pages)
 
-1. Install dependencies
+1. Modify JSON files in `data/` to configure your timetable. See "Data Structure" below for details.
 
-```bash
-pip install -r requirements.txt
-```
+2. Enable GitHub Actions workflow
 
-2. Generate ICS
+After enabling, the ICS file will be automatically generated and published when you modify code or timetable data.
 
-```bash
-python scripts/generate_ics.py
-```
+The workflow also runs automatically every morning at 6 AM.
 
-Output is written to `_site/calendar.ics` (folder auto-created).
+3. Enable GitHub Pages in repository settings, select `gh-pages` branch as the publish source
 
-3. Subscribe (example)
+4. Subscribe in your calendar
 
 ```
 https://<username>.github.io/<repo>/calendar.ics
 ```
 
-## Data Schema
+Example:
 
-See [CONFIG.md](CONFIG.md) for complete examples and field descriptions. Key files:
+```
+https://zhaozhuoran.github.io/timetable/calendar.ics
+```
 
-- `data/periods.json`: period times, `start`/`end` (HH:MM)
-- `data/subjects.json`: subject ID → name mapping
-- `data/timetable.json`: v1 (single list) or v2 (multiple files + date ranges)
-- `data/holidays.json`: holidays in old/new formats
-- `data/overrides.json`: overrides (either `{use_weekday}` or list of `{period, subject}`)
+## Data Structure
 
-The sample data in `data/` is fictional and safe to publish. Swap in your own schedules before production use.
+See [CONFIG.md](CONFIG.md) for complete JSON examples and field descriptions. Key files:
+
+- `data/periods.json`: period times
+- `data/subjects.json`: subject ID to display name mapping
+- `data/timetable.json`: main timetable config
+- `data/holidays.json`: holiday definitions
+- `data/overrides.json`: temporary override config
+- `data/timetables/*.json`: concrete timetable files
+
+Replace the example files in `data/` with your actual configuration before production use.
 
 ## GitHub Actions & GitHub Pages
 
@@ -64,16 +64,6 @@ Notes:
 - The script copies any files under `static/` (for example `static/CNAME`) into `_site/` so they are served by Pages.
 - After the first successful run, enable GitHub Pages in the repository settings and point it to the `gh-pages` branch (or the branch configured in the workflow).
 
-## Testing
-
-Use Python’s unittest:
-
-```bash
-python -m unittest discover
-```
-
-Tests temporarily modify `data/timetable.json` and restore it afterward, and clean `_site/` when needed.
-
-## License
+## LICENSE
 
 This project is licensed under the GNU General Public License v3.0 (GPLv3). See [LICENSE](LICENSE).

@@ -3,18 +3,16 @@
 - English (this file)
 - Simplified Chinese: [CONFIG.zh-cn.md](CONFIG.zh-cn.md)
 
-This document describes how to configure timetable data.
-
 ## Files Overview
 
 All configuration files live under `data/`:
 
-- `periods.json` – period time definitions
-- `subjects.json` – subject ID to display name mapping
-- `timetable.json` – main timetable config
-- `timetables/` – concrete timetable files
-- `holidays.json` – holiday definitions
-- `overrides.json` – temporary overrides
+- `periods.json`: period time definitions
+- `subjects.json`: subject ID to display name mapping
+- `timetable.json`: main timetable config
+- `holidays.json`: holiday definitions
+- `overrides.json`: temporary overrides
+- `timetables/*.json`: concrete timetable files
 
 ## periods.json
 
